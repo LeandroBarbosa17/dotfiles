@@ -1,0 +1,11 @@
+#!/bin/bash
+export LANG=C.UTF-8
+export LC_ALL=C.UTF-8
+
+# Mostra uso de memória RAM
+
+mem=$(free -h | awk '/^Mem:/ {print $3 "/" $2}')
+echo "<span color='#fab387'>💾 $mem</span>"
+
+echo "$output"
+exit 0

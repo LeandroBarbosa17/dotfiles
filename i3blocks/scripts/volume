@@ -1,0 +1,31 @@
+#!/bin/bash
+export LANG=C.UTF-8
+export LC_ALL=C.UTF-8
+
+# Volume — clique e scroll (amixer + ALSA)
+
+get_volume() {
+    amixer get Master | grep -o "[0-9]*%" | head -1
+}
+
+get_mute() {
+    amixer get Master | grep -o '\[on\]' | tail -n1
+}
+
+case $BLOCK_BUTTON in
+    1) amixer set Master toggle >/dev/null ;;     # Clique esquerdo: mute/unmute
+    4) amixer set Master 5%+ >/dev/null ;;        # Scroll up: +5%
+    5) amixer set Master 5%- >/dev/null ;;        # Scroll down: -5%
+esac
+
+vol=$(get_volume)
+mute=$(get_mute)
+
+if [[ $mute != "[on]" ]]; then
+    echo "<span color='#f38ba8'>🔇 $vol</span>"
+else
+    echo "<span color='#a6e3a1'>🔊 $vol</span>"
+fi
+
+echo "$output"
+exit 0

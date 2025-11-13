@@ -1,0 +1,22 @@
+#!/bin/bash
+export LANG=C.UTF-8
+export LC_ALL=C.UTF-8
+
+# Rede cabeada — Catppuccin edition 🔌
+
+ether_state=$(nmcli -t -f DEVICE,TYPE,STATE dev | grep "ethernet" | cut -d: -f3)
+
+case "$ether_state" in
+    "connected")
+        echo "<span color='#a6e3a1'>🔌 Conectado</span>"
+        ;;
+    "connecting")
+        echo "<span color='#f9e2af'>⏳ Conectando...</span>"
+        ;;
+    "disconnected"|"unavailable"|*)
+        echo "<span color='#f38ba8'>❌ Sem rede</span>"
+        ;;
+esac
+
+echo "$output"
+exit 0

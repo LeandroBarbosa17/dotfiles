@@ -1,0 +1,28 @@
+#!/bin/bash
+# window-title.sh — versão final, preserva UTF-8 e remove apenas bytes inválidos
+
+export LANG=pt_BR.UTF-8
+export LC_ALL=pt_BR.UTF-8
+
+# Obtém o título da janela focada
+title=$(i3-msg -t get_tree | jq -r '.. | objects | select(.focused==true).name' 2>/dev/null)
+
+# Se estiver vazio ou nulo
+if [[ -z "$title" || "$title" == "null" ]]; then
+    title="Área de trabalho"
+fi
+
+# Remove apenas bytes inválidos de UTF-8
+title=$(echo "$title" | iconv -f UTF-8 -t UTF-8 -c)
+
+# Escapa aspas e barras invertidas para não quebrar o JSON
+title=$(printf '%s' "$title" | sed 's/\\/\\\\/g; s/"/\\"/g')
+
+# Limita o tamanho (pra não quebrar a barra com títulos longos)
+short_title=$(echo "$title" | awk '{print substr($0,1,80)}')
+
+# Saída única e segura em UTF-8
+printf "%s\n" "<span color='#b4befe'>$short_title</span>"
+
+exit 0
+

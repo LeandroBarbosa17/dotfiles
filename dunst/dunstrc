@@ -1,0 +1,6 @@
+[global]
+    font = JetBrainsMono Nerd Font 10
+    frame_color = "#b4befe"
+    separator_color = "#6c7086"
+    background = "#1e1e2e"
+    foreground = "#cdd6f4"
