@@ -7,6 +7,7 @@ cp -r .local/bin/* ~/.local/bin/ && \
 chmod +x ~/.local/bin/*
 
 DEPENDENCIES:
+
 sudo pacman -S --needed base-devel git
 
 git clone https://aur.archlinux.org/yay.git
@@ -17,5 +18,6 @@ makepkg -si
 
 yay -S --needed - < ~/dotfiles/pkglist.txt
 
-*If you want to install only official packages*
+#If you want to install only official packages:#
+
 sudo pacman -S --needed - < ~/dotfiles/pkglist.txt
