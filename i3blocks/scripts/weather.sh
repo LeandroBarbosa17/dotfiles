@@ -9,7 +9,6 @@ WEATHER_DATA=$(curl -s "$URL")
 
 # Verifica se a requisição foi bem-sucedida
 if [ $? -ne 0 ]; then
-    # Se não houver rede, exibe um ícone simples de erro
     echo "🌐 0°C" 
     exit 0
 fi
@@ -24,61 +23,77 @@ if [ -z "$TEMP" ] || [ -z "$DESC_EN" ]; then
     exit 0
 fi
 
-# --- LÓGICA DE ÍCONES ---
-# Se o ícone "?" aparecer, significa que o DESC_EN não foi mapeado e precisa ser adicionado.
+# --- LÓGICA DE ÍCONES (BLOCO DE CASOS EXAUSTIVO) ---
 ICON="❓"
 
 case "$DESC_EN" in
-    # SOL E CÉU LIMPO
+    # ------------------- CÉU LIMPO E SOL -------------------
     *"Clear"*|*"Sunny"*) 
         ICON="☀️" 
         ;;
 
-    # NUVENS E NEBLINA
-    *"Cloudy"*|*"Overcast"*) 
-        ICON="☁️" 
-        ;;
+    # ------------------- NUVENS E PARCIALMENTE -------------------
     *"Partly cloudy"*|*"Light cloud"*|*"Moderate cloud"*) 
         ICON="⛅" 
         ;;
+    *"Cloudy"*|*"Overcast"*|*"Cloudy conditions"*) 
+        ICON="☁️" 
+        ;;
+
+    # ------------------- NEBLINA E NÉVOA -------------------
     *"Mist"*|*"Fog"*|*"Haze"*) 
         ICON="🌫️" 
         ;;
 
-    # CHUVA
-    *"Drizzle"*|*"Light rain"*) 
+    # ------------------- CHUVA LEVE E CHUVISCO -------------------
+    *"Patchy rain nearby"*|*"Drizzle"*|*"Light rain"*|*"Patchy light rain"*) 
         ICON="🌧️" 
         ;;
-    *"Rain"*|*"Showers"*) 
-        ICON="☔" 
+    *"Light rain shower"*|*"Patchy light drizzle"*)
+        ICON="🌦️" 
         ;;
-    *"Heavy rain"*|*"Torrential rain"*) 
+
+    # ------------------- CHUVA MODERADA E FORTE -------------------
+    *"Moderate rain"*|*"Heavy rain"*|*"Torrential rain"*) 
         ICON="💦" 
         ;;
-
-    # NEVE E GRANIZO
-    *"Snow"*|*"Sleet"*|*"Freezing"*|*"Ice"*) 
-        ICON="❄️" 
+    *"Moderate or heavy rain shower"*)
+        ICON="☔" 
         ;;
-    *"Hail"*) 
+        
+    # ------------------- GRANIZO E NEVE LEVE -------------------
+    *"Sleet"*|*"Light sleet"*) 
         ICON="🌨️" 
         ;;
+    *"Hail"*|*"Light showers of ice pellets"*)
+        ICON="🧊" 
+        ;;
+    *"Patchy light snow"*|*"Light snow"*|*"Moderate snow"*) 
+        ICON="❄️" 
+        ;;
 
-    # TEMPESTADES
-    *"Thunderstorm"*|*"Thunder"*) 
+    # ------------------- NEVE FORTE E CONGELAMENTO -------------------
+    *"Heavy snow"*|*"Moderate or heavy snow"*|*"Blizzard"*|*"Blowing snow"*)
+        ICON="💨❄️" 
+        ;;
+    *"Freezing"*|*"Freezing rain"*|*"Heavy freezing rain"*) 
+        ICON="🥶" 
+        ;;
+
+    # ------------------- TEMPESTADES -------------------
+    *"Thunderstorm"*|*"Thunder"*|*"Thundery outbreaks"*) 
         ICON="⛈️" 
         ;;
-    *"Patchy light drizzle with thunder"*) 
+    *"Patchy light rain with thunder"*|*"Patchy light snow with thunder"*)
         ICON="🌩️" 
         ;;
 
-    # CASO PADRÃO
+    # ------------------- CASO PADRÃO (FALLBACK) -------------------
     *) 
         ICON="❓"
-        # Não exibe o DESCONHECIDO, mas se o "?" aparecer, você sabe que uma string faltou.
+        # Se você ainda vir o "?", verifique o log e adicione a string faltante!
         ;;
 esac
 
 # --- SAÍDA FINAL ---
-# Apenas ÍCONE e TEMPERATURA
 echo "$ICON ${TEMP}°C"
