@@ -23,6 +23,21 @@ command=echo "<span color='#45475a'>|</span>"
 interval=once
 markup=pango
 
+# Configuração para o Módulo de Clima
+[weather]
+command=~/.config/i3blocks/scripts/weather.sh
+interval=1800  # Atualiza a cada 30 minutos (1800 segundos)
+separator=false
+separator_block_width=15
+
+################################################################################
+# Separador
+################################################################################
+[sep1]
+command=echo "<span color='#45475a'>|</span>"
+interval=once
+markup=pango
+
 ################################################################################
 # 2️⃣ VOLUME
 ################################################################################
