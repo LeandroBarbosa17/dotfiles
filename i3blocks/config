@@ -26,7 +26,7 @@ markup=pango
 # Configuração para o Módulo de Clima
 [weather]
 command=~/.config/i3blocks/scripts/weather.sh
-interval=1800  # Atualiza a cada 30 minutos (1800 segundos)
+interval=600  # Atualiza a cada 10 minutos (600 segundos)
 separator=false
 separator_block_width=15
 

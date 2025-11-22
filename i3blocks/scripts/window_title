@@ -1,28 +1,61 @@
 #!/bin/bash
-# window-title.sh — versão final, preserva UTF-8 e remove apenas bytes inválidos
+# window-app.sh - Exibe apenas o nome e o ícone do aplicativo em foco.
 
 export LANG=pt_BR.UTF-8
 export LC_ALL=pt_BR.UTF-8
 
-# Obtém o título da janela focada
-title=$(i3-msg -t get_tree | jq -r '.. | objects | select(.focused==true).name' 2>/dev/null)
+# 1. OBTÉM OS DADOS DA JANELA (CLASSE e TÍTULO)
+WINDOW_INFO=$(i3-msg -t get_tree | jq -r '
+    .. | objects | select(.focused==true and .name).name as $title | select(.focused==true and .window_properties).window_properties.class as $class | 
+    {title: $title, class: $class}
+' 2>/dev/null)
 
-# Se estiver vazio ou nulo
-if [[ -z "$title" || "$title" == "null" ]]; then
-    title="Área de trabalho"
+# Extrai a classe (ex: 'Firefox', 'Spotify')
+APP_CLASS=$(echo "$WINDOW_INFO" | jq -r '.class // empty')
+# Extrai o título (usado apenas para o fallback "Área de trabalho")
+APP_TITLE=$(echo "$WINDOW_INFO" | jq -r '.title // empty')
+
+# 2. TRATAMENTO DE ERROS E ESTADO PADRÃO
+if [[ -z "$APP_CLASS" || "$APP_CLASS" == "null" ]]; then
+    APP_CLASS="i3-wm"
+    APP_TITLE="Área de trabalho"
 fi
 
-# Remove apenas bytes inválidos de UTF-8
-title=$(echo "$title" | iconv -f UTF-8 -t UTF-8 -c)
+# 3. MAPPING DE ÍCONES (APENAS OS SEUS APPS)
+# Sugestão: Se você usar Nerd Fonts, substitua os emojis pelos códigos hexadecimais para melhor renderização!
+ICON="" # Ícone padrão (ex: Desktop)
 
-# Escapa aspas e barras invertidas para não quebrar o JSON
-title=$(printf '%s' "$title" | sed 's/\\/\\\\/g; s/"/\\"/g')
+case "$APP_CLASS" in
+    "Spotify")
+        ICON="🎵" 
+        APP_NAME="Spotify"
+        ;;
+    "firefox"|"Firefox")
+        ICON="🦊" 
+        APP_NAME="Firefox"
+        ;;
+    # O Alacritty costuma ter a classe "Alacritty"
+    "Alacritty")
+        ICON="" 
+        APP_NAME="Alacritty"
+        ;;
+    "Code")
+        # O VSCode e VSCodium geralmente usam a classe "Code"
+        ICON="VSCode" 
+        APP_NAME="VS Code"
+        ;;
+    "Thunar")
+        ICON="📁" 
+        APP_NAME="Thunar"
+        ;;
+    # Caso para qualquer outra janela não mapeada
+    *)
+        # Capitaliza a primeira letra da classe (ex: 'gimp' -> 'Gimp')
+        APP_NAME=$(printf "%s" "$APP_CLASS" | sed 's/\(.\)/\U\1/')
+        ;;
+esac
 
-# Limita o tamanho (pra não quebrar a barra com títulos longos)
-short_title=$(echo "$title" | awk '{print substr($0,1,80)}')
-
-# Saída única e segura em UTF-8
-printf "%s\n" "<span color='#b4befe'>$short_title</span>"
+# 4. SAÍDA FINAL (Icone e Nome do App)
+printf "%s\n" "<span color='#b4befe'>$ICON  $APP_NAME</span>"
 
 exit 0
-

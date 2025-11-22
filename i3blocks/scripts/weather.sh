@@ -1,98 +1,53 @@
 #!/bin/bash
+# weather_owm.sh - Usa OpenWeatherMap com códigos numéricos
 
-# Define sua cidade ou localização.
-CITY="Sao_Goncalo" 
-URL="https://wttr.in/${CITY}?format=j1"
+# --- CONFIGURAÇÃO ---
+API_KEY="8b05d62206f459e1d298cbe5844d7d87"
+CITY_ID="3448439"
+UNITS="metric" # Use 'metric' para Celsius
+LANG="pt"      # Idioma da descrição (opcional, mas bom para debug)
+CACHE_FILE="/tmp/owm_weather_cache.json"
 
-# 1. Faz a requisição e extrai os dados
-WEATHER_DATA=$(curl -s "$URL")
+URL="http://api.openweathermap.org/data/2.5/weather?id=${CITY_ID}&units=${UNITS}&lang=${LANG}&appid=${API_KEY}"
 
-# Verifica se a requisição foi bem-sucedida
-if [ $? -ne 0 ]; then
-    echo "🌐 0°C" 
+# --- EXECUÇÃO E CACHE (Otimização Rápida) ---
+
+# Se o cache tiver mais de 10 minutos, faça uma nova requisição.
+if [ ! -f "$CACHE_FILE" ] || find "$CACHE_FILE" -mmin +10 | grep -q '.*'; then
+    curl -s "$URL" > "$CACHE_FILE"
+fi
+
+# 1. TRATAMENTO DE ERROS
+if ! grep -q '"cod":200' "$CACHE_FILE"; then
+    echo "❗ 0°C (OWM Erro)"
     exit 0
 fi
 
-# Extrai a temperatura e a descrição do clima
-TEMP=$(echo "$WEATHER_DATA" | jq -r '.current_condition[0].temp_C')
-DESC_EN=$(echo "$WEATHER_DATA" | jq -r '.current_condition[0].weatherDesc[0].value')
+# 2. EXTRAÇÃO DE DADOS
+# Extrai o código de condição principal (800, 500, etc.) e a temperatura
+WEATHER_CODE=$(jq -r '.weather[0].id' "$CACHE_FILE")
+TEMP=$(jq -r '.main.temp' "$CACHE_FILE" | awk '{printf "%.0f\n", $1}') # Arredonda a temperatura
 
-# Verifica se os dados principais foram encontrados
-if [ -z "$TEMP" ] || [ -z "$DESC_EN" ]; then
-    echo "❓ 0°C"
-    exit 0
-fi
-
-# --- LÓGICA DE ÍCONES (BLOCO DE CASOS EXAUSTIVO) ---
+# 3. MAPPING DE ÍCONES BASEADO EM CÓDIGOS NUMÉRICOS (Muito mais estável!)
 ICON="❓"
 
-case "$DESC_EN" in
-    # ------------------- CÉU LIMPO E SOL -------------------
-    *"Clear"*|*"Sunny"*) 
-        ICON="☀️" 
-        ;;
-
-    # ------------------- NUVENS E PARCIALMENTE -------------------
-    *"Partly cloudy"*|*"Light cloud"*|*"Moderate cloud"*) 
-        ICON="⛅" 
-        ;;
-    *"Cloudy"*|*"Overcast"*|*"Cloudy conditions"*) 
-        ICON="☁️" 
-        ;;
-
-    # ------------------- NEBLINA E NÉVOA -------------------
-    *"Mist"*|*"Fog"*|*"Haze"*) 
-        ICON="🌫️" 
-        ;;
-
-    # ------------------- CHUVA LEVE E CHUVISCO -------------------
-    *"Patchy rain nearby"*|*"Drizzle"*|*"Light rain"*|*"Patchy light rain"*) 
-        ICON="🌧️" 
-        ;;
-    *"Light rain shower"*|*"Patchy light drizzle"*)
-        ICON="🌦️" 
-        ;;
-
-    # ------------------- CHUVA MODERADA E FORTE -------------------
-    *"Moderate rain"*|*"Heavy rain"*|*"Torrential rain"*) 
-        ICON="💦" 
-        ;;
-    *"Moderate or heavy rain shower"*)
-        ICON="☔" 
-        ;;
-        
-    # ------------------- GRANIZO E NEVE LEVE -------------------
-    *"Sleet"*|*"Light sleet"*) 
-        ICON="🌨️" 
-        ;;
-    *"Hail"*|*"Light showers of ice pellets"*)
-        ICON="🧊" 
-        ;;
-    *"Patchy light snow"*|*"Light snow"*|*"Moderate snow"*) 
-        ICON="❄️" 
-        ;;
-
-    # ------------------- NEVE FORTE E CONGELAMENTO -------------------
-    *"Heavy snow"*|*"Moderate or heavy snow"*|*"Blizzard"*|*"Blowing snow"*)
-        ICON="💨❄️" 
-        ;;
-    *"Freezing"*|*"Freezing rain"*|*"Heavy freezing rain"*) 
-        ICON="🥶" 
-        ;;
-
-    # ------------------- TEMPESTADES -------------------
-    *"Thunderstorm"*|*"Thunder"*|*"Thundery outbreaks"*) 
-        ICON="⛈️" 
-        ;;
-    *"Patchy light rain with thunder"*|*"Patchy light snow with thunder"*)
-        ICON="🌩️" 
-        ;;
-
-    # ------------------- CASO PADRÃO (FALLBACK) -------------------
-    *) 
-        ICON="❓"
-        # Se você ainda vir o "?", verifique o log e adicione a string faltante!
-        ;;
+# Códigos do OpenWeatherMap:
+# 2xx: Tempestade (Thunderstorm)
+# 3xx/5xx: Chuva/Chuvisco (Drizzle/Rain)
+# 6xx: Neve (Snow)
+# 7xx: Atmosfera (Névoa/Neblina)
+# 800: Céu Limpo
+# 80x: Nuvens
+case "$WEATHER_CODE" in
+    2*) ICON="⛈️" ;; # Tempestade
+    3*|5*) ICON="🌧️" ;; # Chuva/Chuvisco
+    6*) ICON="❄️" ;; # Neve
+    701|721|741) ICON="🌫️" ;; # Névoa/Neblina
+    711|731|751|761|762|771|781) ICON="💨" ;; # Poeira/Fumaça
+    800) ICON="☀️" ;; # Céu Limpo
+    801|802) ICON="⛅" ;; # Nuvens claras/Poucas Nuvens
+    803|804) ICON="☁️" ;; # Nuvens Quebradas/Nublado
+    *) ICON="❓" ;;
 esac
 
 # --- SAÍDA FINAL ---
