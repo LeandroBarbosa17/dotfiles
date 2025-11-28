@@ -34,6 +34,11 @@ case "$APP_CLASS" in
         ICON="🦊" 
         APP_NAME="Firefox"
         ;;
+    # ADICIONE A CLÁUSULA DO BRAVE AQUI
+    "Brave-browser")
+        ICON="🦁"  # Ícone para o Brave (ex: leão ou '' da Nerd Font)
+        APP_NAME="Brave"
+        ;;
     # O Alacritty costuma ter a classe "Alacritty"
     "Alacritty")
         ICON="" 

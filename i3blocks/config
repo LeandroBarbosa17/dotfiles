@@ -96,6 +96,6 @@ markup=pango
 ################################################################################
 [datetime]
 command=date '+<span color="#89b4fa">📅 %a-%d-%b</span> <span color="#f9e2af">🕓 %H:%M</span>'
-interval=60
+interval=1
 markup=pango
 separator=false

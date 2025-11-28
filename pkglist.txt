@@ -2,6 +2,7 @@ alacritty
 alsa-utils
 base
 base-devel
+brave-bin
 catppuccin-gtk-theme-mocha
 clang
 cloudflare-warp-bin
@@ -15,7 +16,6 @@ feh
 firefox
 git
 gnome-themes-extra
-go
 grub
 gvfs
 helix
@@ -46,9 +46,8 @@ os-prober
 otf-font-awesome
 papirus-icon-theme
 pavucontrol
-pipewire
+pfetch
 pipewire-alsa
-pipewire-jack
 pipewire-pulse
 playerctl
 rofi
@@ -66,7 +65,6 @@ ttf-nerd-fonts-symbols-mono
 udisks2
 unzip
 wget
-wireplumber
 woff2-font-awesome
 xclip
 xdg-user-dirs

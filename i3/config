@@ -87,7 +87,7 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+x kill
 
 # Open Apps
-bindsym $mod+b exec firefox
+bindsym $mod+b exec brave
 bindsym $mod+f exec thunar
 
 # start dmenu (a program launcher)
@@ -198,14 +198,19 @@ exec --no-startup-id xset s 0
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
+
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
 # reboot the pc
 bindsym Ctrl+$mod+Mod1+r exec systemctl reboot
+
 # shutdown the pc
 bindsym Ctrl+$mod+Mod1+p exec systemctl poweroff
+
 # lock the pc
 bindsym Ctrl+$mod+Mod1+l exec --no-startup-id ~/.config/i3/lock.sh
 
@@ -267,7 +272,7 @@ bar {
   }
 }
 
-exec_always --no-startup-id feh --bg-scale ~/Downloads/wall-01.webp
+exec_always --no-startup-id feh --bg-scale /usr/share/backgrounds/wall-01.webp
 exec --no-startup-id xdg-user-dirs-update
 exec --no-startup-id /usr/lib/xfce4/xfconf/xfconfd
 exec --no-startup-id /usr/lib/gvfs/gvfsd &
