@@ -89,6 +89,16 @@ bindsym $mod+x kill
 # Open Apps
 bindsym $mod+b exec brave
 bindsym $mod+f exec thunar
+bindsym $mod+s exec spotify
+
+# Garante que o Spotify vá para o workspace 1 E que o foco pule para lá
+for_window [class="Spotify"] move to workspace 1, focus
+
+# Garante que o Brave vá para o workspace 2 E que o foco pule para lá
+for_window [class="Brave-browser"] move to workspace 2, focus
+
+# Garante que o Thunar vá para o workspace 3 E que o foco pule para lá
+for_window [class="Thunar"] move to workspace 3, focus
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id rofi -show drun
@@ -130,7 +140,7 @@ bindsym $mod+v split v
 
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
+#bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
