@@ -8,7 +8,7 @@ cp -r bin/ ~/.local/ && \
 chmod +x ~/.local/bin/* && \
 chmod +x ~/.config/i3blocks/scripts/* && \
 sudo mkdir -p /usr/share/backgrounds && \
-sudo cp -r Downloads/wall-01.webp Downloads/Wall.png /usr/share/backgrounds/ 
+sudo cp -r dotfiles/wall-01.webp dotfiles/Wall.png /usr/share/backgrounds/ 
 
 DEPENDENCIES:
 
