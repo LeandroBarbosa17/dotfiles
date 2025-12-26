@@ -10,4 +10,4 @@ general.import = [
 
 [terminal.shell]
 program = "/bin/bash"
-args = ["-c", "pfetch; exec $SHELL"]
+args = ["-c", "fastfetch -c examples/13; exec $SHELL"]

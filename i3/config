@@ -87,15 +87,15 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+x kill
 
 # Open Apps
-bindsym $mod+b exec brave
+bindsym $mod+b exec firefox
 bindsym $mod+f exec thunar
 bindsym $mod+s exec spotify
 
 # Garante que o Spotify vá para o workspace 1 E que o foco pule para lá
 for_window [class="Spotify"] move to workspace 1, focus
 
-# Garante que o Brave vá para o workspace 2 E que o foco pule para lá
-for_window [class="Brave-browser"] move to workspace 2, focus
+# Garante que o Firefox vá para o workspace 2 E que o foco pule para lá
+for_window [class="firefox"] move to workspace 2, focus
 
 # Garante que o Thunar vá para o workspace 3 E que o foco pule para lá
 for_window [class="Thunar"] move to workspace 3, focus
