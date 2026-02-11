@@ -81,7 +81,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+x kill
@@ -90,6 +90,7 @@ bindsym $mod+x kill
 bindsym $mod+b exec firefox
 bindsym $mod+f exec thunar
 bindsym $mod+s exec spotify
+bindsym $mod+n exec helix
 
 # Garante que o Spotify vá para o workspace 1 E que o foco pule para lá
 for_window [class="Spotify"] move to workspace 1, focus
@@ -290,3 +291,4 @@ exec --no-startup-id /usr/lib/gvfs/gvfsd-metadata &
 exec --no-startup-id /usr/lib/gvfs/gvfs-udisks2-volume-monitor &
 exec --no-startup-id dunst
 exec --no-startup-id ~/.local/bin/spotify-notify.sh
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
