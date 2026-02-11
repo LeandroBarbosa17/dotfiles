@@ -43,7 +43,7 @@ yay -S --needed --noconfirm - < pkglist.txt
 # --------------------------------------------------
 echo "-- Criando diretórios"
 mkdir -p ~/.config
-mkdir -p ~/.local/bin
+mkdir -p ~/.local
 
 # --------------------------------------------------
 # 6) Copiando configurações
@@ -56,7 +56,7 @@ cp -r i3blocks/ ~/.config/
 cp -r kitty/ ~/.config/
 cp -r picom/ ~/.config/
 cp -r fastfetch/ ~/.config/ 2>/dev/null || true
-cp -r bin/ ~/.local/bin/ 2>/dev/null || true
+cp -r bin/ ~/.local/ 2>/dev/null || true
 
 # --------------------------------------------------
 # 7) Permissões
