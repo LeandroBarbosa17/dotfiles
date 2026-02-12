@@ -55,6 +55,8 @@ cp -r i3/ ~/.config/
 cp -r i3blocks/ ~/.config/
 cp -r kitty/ ~/.config/
 cp -r picom/ ~/.config/
+cp -r helix/ ~/.config/
+cp -r starship.toml ~/.config/
 cp -r fastfetch/ ~/.config/ 2>/dev/null || true
 cp -r bin/ ~/.local/ 2>/dev/null || true
 
