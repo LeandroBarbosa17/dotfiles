@@ -1,8 +1,8 @@
 # 🧊 Arch Linux i3 Rice — Catppuccin Mocha
 
-Setup minimalista baseado em **Arch Linux + i3wm**, com identidade visual **Catppuccin Mocha** aplicada de forma consistente no sistema.
+A minimal and performance-focused setup based on **Arch Linux + i3wm**, fully themed with **Catppuccin Mocha**.
 
-Leve, rápido e totalmente controlado via dotfiles.
+Lightweight, fast, and fully controlled through dotfiles.
 
 ---
 
@@ -11,18 +11,18 @@ Leve, rápido e totalmente controlado via dotfiles.
 - 🪟 WM: i3  
 - 🖥 Terminal: kitty  
 - 🎨 Shell: zsh  
-- 🚀 Prompt: starship (Catppuccin)  
-- 🧊 Tema: Catppuccin Mocha  
+- 🚀 Prompt: starship (Catppuccin theme)  
+- 🧊 Theme: Catppuccin Mocha  
 - 🖱 Cursor: Catppuccin  
-- 🔲 Compositor: picom (GLX backend + animações suaves)  
-- 📊 Barra: i3blocks  
-- 🧾 System Info: fastfetch (custom)  
-- 🔔 Notificações: dunst  
-- 📦 AUR helper: yay  
+- 🔲 Compositor: picom (GLX backend + smooth animations)  
+- 📊 Status Bar: i3blocks  
+- 🧾 System Info: fastfetch (custom configuration)  
+- 🔔 Notifications: dunst  
+- 📦 AUR Helper: yay  
 
 ---
 
-## 📂 Estrutura do Repositório
+## 📂 Repository Structure
 
 ```
 .
@@ -39,9 +39,9 @@ Leve, rápido e totalmente controlado via dotfiles.
 
 ---
 
-## 🚀 Instalação
+## 🚀 Installation
 
-Em uma instalação limpa do **Arch Linux**:
+On a fresh **Arch Linux** installation:
 
 ```bash
 git clone https://github.com/LeandroBarbosa17/dotfiles.git
@@ -50,71 +50,73 @@ chmod +x install.sh
 ./install.sh
 ```
 
-O script irá:
+The script will:
 
-- Atualizar o sistema
-- Instalar `git` e `base-devel`
-- Instalar o `yay`
-- Instalar todos os pacotes do `pkglist.txt`
-- Copiar as configurações para `~/.config`
-- Aplicar permissões necessárias
+- Update the system
+- Install `git` and `base-devel`
+- Install `yay`
+- Install all packages listed in `pkglist.txt`
+- Copy configuration files to `~/.config`
+- Apply necessary permissions
 
-Após a instalação, recomenda-se reiniciar ou relogar.
+A reboot or re-login is recommended after installation.
 
 ---
 
-## 📦 Instalação Manual (alternativa)
+## 📦 Manual Installation (Alternative)
 
-Caso já tenha o `yay` instalado:
+If you already have `yay` installed:
 
 ```bash
 yay -S --needed - < pkglist.txt
 ```
 
-Depois copie as configurações manualmente para `~/.config`.
+Then manually copy the configuration directories to `~/.config`.
 
 ---
 
-## 🎨 Visual
+## 🎨 Visual Features
 
-- Tema global: Catppuccin Mocha  
-- Kitty com destaque visual para comandos válidos e inválidos  
-- Picom com animações suaves usando backend GLX  
-- Fastfetch customizado com identidade Mauve  
-- Cursor Catppuccin aplicado via lxappearance  
-
----
-
-## 🔧 Personalização
-
-Arquivos principais para customização:
-
-- `~/.config/i3/config` → atalhos e comportamento do WM  
-- `~/.config/picom/picom.conf` → animações, sombras e transições  
-- `~/.config/kitty/kitty.conf` → cores e ajustes do terminal  
-- `~/.config/fastfetch/config.jsonc` → layout do fetch  
+- Global Catppuccin Mocha theme  
+- Kitty with visual indication for valid/invalid commands  
+- Smooth window animations using picom (GLX backend)  
+- Custom fastfetch layout with Mauve accent  
+- Catppuccin cursor applied via lxappearance  
 
 ---
 
-## 🎯 Objetivo
+## 🔧 Customization
 
-Este setup prioriza:
+Main configuration files:
+
+- `~/.config/i3/config` → keybindings and WM behavior  
+- `~/.config/picom/picom.conf` → animations and shadows  
+- `~/.config/kitty/kitty.conf` → terminal behavior and colors  
+- `~/.config/fastfetch/config.jsonc` → system fetch layout  
+
+---
+
+## 🎯 Philosophy
+
+This setup prioritizes:
 
 - Performance  
-- Simplicidade  
-- Controle total do ambiente  
-- Coerência visual  
+- Simplicity  
+- Full environment control  
+- Visual consistency  
 
-Sem frameworks pesados ou abstrações desnecessárias.
+No heavy frameworks.  
+No unnecessary abstraction.  
+Everything is explicitly configured.
 
 ---
 
 ## 📸 Preview
 
-Adicione screenshots do seu setup aqui futuramente.
+Screenshots will be added soon.
 
 ---
 
-## 📜 Licença
+## 📜 License
 
-Uso pessoal. Sinta-se livre para adaptar.
+Personal use project. Feel free to adapt and modify.
