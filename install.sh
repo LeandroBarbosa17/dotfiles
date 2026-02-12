@@ -3,80 +3,94 @@
 set -e
 
 echo ""
-echo "===== BOOTSTRAP DOTFILES - ARCH LINUX ====="
+echo "===== ARCH LINUX DOTFILES BOOTSTRAP ====="
 echo ""
 
 # --------------------------------------------------
-# 1) Atualiza sistema
+# 1) Update system
 # --------------------------------------------------
-echo "-- Atualizando sistema"
+echo "-- Updating system"
 sudo pacman -Syu --noconfirm
 
 # --------------------------------------------------
-# 2) Instala dependências básicas
+# 2) Install base dependencies
 # --------------------------------------------------
-echo "-- Instalando dependências base (git, base-devel)"
+echo "-- Installing base dependencies (git, base-devel)"
 sudo pacman -S --needed --noconfirm git base-devel
 
 # --------------------------------------------------
-# 3) Instala yay se não existir
+# 3) Install yay if not present
 # --------------------------------------------------
 if ! command -v yay >/dev/null 2>&1; then
-    echo "-- Instalando yay (AUR helper)"
+    echo "-- Installing yay (AUR helper)"
     cd /tmp
     git clone https://aur.archlinux.org/yay.git
     cd yay
     makepkg -si --noconfirm
     cd ~
 else
-    echo "-- yay já está instalado"
+    echo "-- yay already installed"
 fi
 
 # --------------------------------------------------
-# 4) Instala pacotes do pkglist.txt usando yay
+# 4) Install packages from pkglist.txt using yay
 # --------------------------------------------------
-echo "-- Instalando pacotes do pkglist.txt via yay"
+echo "-- Installing packages from pkglist.txt"
 yay -S --needed --noconfirm - < pkglist.txt
 
 # --------------------------------------------------
-# 5) Criando diretórios
+# 5) Set zsh as default shell (if installed)
 # --------------------------------------------------
-echo "-- Criando diretórios"
+if command -v zsh >/dev/null 2>&1; then
+    ZSH_PATH="$(which zsh)"
+    if [ "$SHELL" != "$ZSH_PATH" ]; then
+        echo "-- Setting zsh as default shell"
+        chsh -s "$ZSH_PATH"
+        echo "Zsh set as default. Re-login required."
+    else
+        echo "-- Zsh already set as default shell"
+    fi
+fi
+
+# --------------------------------------------------
+# 6) Create directories
+# --------------------------------------------------
+echo "-- Creating directories"
 mkdir -p ~/.config
 mkdir -p ~/.local
 
 # --------------------------------------------------
-# 6) Copiando configurações
+# 7) Copy configuration files
 # --------------------------------------------------
-echo "-- Copiando configs"
-cp -r alacritty/ ~/.config/ 2>/dev/null || true
-cp -r dunst/ ~/.config/ 2>/dev/null || true
+echo "-- Copying configuration files"
+
 cp -r i3/ ~/.config/
 cp -r i3blocks/ ~/.config/
 cp -r kitty/ ~/.config/
 cp -r picom/ ~/.config/
 cp -r helix/ ~/.config/
-cp -r starship.toml ~/.config/
-cp -r fastfetch/ ~/.config/ 2>/dev/null || true
+cp -r fastfetch/ ~/.config/
+cp -r dunst/ ~/.config/ 2>/dev/null || true
+cp -r alacritty/ ~/.config/ 2>/dev/null || true
+cp starship.toml ~/.config/ 2>/dev/null || true
 cp -r bin/ ~/.local/ 2>/dev/null || true
 
 # --------------------------------------------------
-# 7) Permissões
+# 8) Set permissions
 # --------------------------------------------------
-echo "-- Ajustando permissões"
+echo "-- Setting permissions"
 chmod +x ~/.local/bin/* 2>/dev/null || true
 chmod +x ~/.config/i3blocks/scripts/* 2>/dev/null || true
 
 # --------------------------------------------------
-# 8) Instalando wallpapers
+# 9) Install wallpapers
 # --------------------------------------------------
-echo "-- Instalando wallpapers"
+echo "-- Installing wallpapers"
 sudo mkdir -p /usr/share/backgrounds
 sudo cp -f Wall.png /usr/share/backgrounds/ 2>/dev/null || true
 sudo cp -f wall-01.webp /usr/share/backgrounds/ 2>/dev/null || true
 
 echo ""
-echo "===== INSTALAÇÃO CONCLUÍDA ====="
-echo "Recomendo fazer logout/login ou reiniciar o sistema."
+echo "===== INSTALLATION COMPLETE ====="
+echo "Please log out and log back in (or reboot) to apply all changes."
 echo ""
-
