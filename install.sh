@@ -36,7 +36,7 @@ fi
 # 4) Install packages from pkglist.txt using yay
 # --------------------------------------------------
 echo "-- Installing packages from pkglist.txt"
-yay -S --needed --noconfirm - < pkglist.txt
+yay -S --needed  - < pkglist.txt
 
 # --------------------------------------------------
 # 5) Set zsh as default shell (if installed)
