@@ -73,6 +73,7 @@ cp -r fastfetch/ ~/.config/
 cp -r dunst/ ~/.config/ 2>/dev/null || true
 cp -r alacritty/ ~/.config/ 2>/dev/null || true
 cp starship.toml ~/.config/ 2>/dev/null || true
+cp .zshrc ~/ 2>/dev/null || true
 cp -r bin/ ~/.local/ 2>/dev/null || true
 
 # --------------------------------------------------
