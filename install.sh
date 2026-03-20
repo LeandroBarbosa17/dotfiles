@@ -27,7 +27,7 @@ if ! command -v yay >/dev/null 2>&1; then
     git clone https://aur.archlinux.org/yay.git
     cd yay
     makepkg -si --noconfirm
-    cd ~
+    cd
 else
     echo "-- yay already installed"
 fi
@@ -58,6 +58,7 @@ fi
 echo "-- Creating directories"
 mkdir -p ~/.config
 mkdir -p ~/.local
+mkdir -p ~/.icons
 
 # --------------------------------------------------
 # 7) Copy configuration files
@@ -75,6 +76,9 @@ cp -r alacritty/ ~/.config/ 2>/dev/null || true
 cp starship.toml ~/.config/ 2>/dev/null || true
 cp .zshrc ~/ 2>/dev/null || true
 cp -r bin/ ~/.local/ 2>/dev/null || true
+cp -r nvim/ ~/.config/ 
+cp -r gtk-3.0/ ~/.config/
+cp -r default/ ~/.icons/ 
 
 # --------------------------------------------------
 # 8) Set permissions

@@ -3,7 +3,7 @@ alsa-utils
 amd-ucode
 base
 base-devel
-brave-bin
+bc
 catppuccin-cursors-mocha
 catppuccin-gtk-theme-mocha
 clang
@@ -21,7 +21,6 @@ gnome-themes-extra
 grub
 gst-plugin-pipewire
 gvfs
-helix
 htop
 i3-wm
 i3blocks
@@ -41,10 +40,13 @@ linux-firmware
 linux-lts
 linux-lts-headers
 lxappearance
+maim
 materia-gtk-theme
+mesa
 micro
 mtools
 nano
+neovim
 network-manager-applet
 networkmanager
 noto-fonts
@@ -52,6 +54,7 @@ noto-fonts-cjk
 noto-fonts-emoji
 os-prober
 otf-font-awesome
+papirus-folders-catppuccin-git
 papirus-icon-theme
 pavucontrol
 pfetch
@@ -65,7 +68,7 @@ python-lsp-server
 rofi
 scrot
 smartmontools
-spotify
+spotify-launcher
 starship
 sudo
 thunar
@@ -98,6 +101,7 @@ xfce4-terminal
 xorg-bdftopcf
 xorg-iceauth
 xorg-mkfontscale
+xorg-server
 xorg-sessreg
 xorg-smproxy
 xorg-x11perf
