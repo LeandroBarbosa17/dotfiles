@@ -27,7 +27,7 @@ if ! command -v yay >/dev/null 2>&1; then
     git clone https://aur.archlinux.org/yay.git
     cd yay
     makepkg -si --noconfirm
-    cd
+    cd ~/dotfiles/
 else
     echo "-- yay already installed"
 fi
@@ -71,6 +71,7 @@ cp -r kitty/ ~/.config/
 cp -r picom/ ~/.config/
 cp -r helix/ ~/.config/
 cp -r fastfetch/ ~/.config/
+cp -r rofi/ ~/.config/ 
 cp -r dunst/ ~/.config/ 2>/dev/null || true
 cp -r alacritty/ ~/.config/ 2>/dev/null || true
 cp starship.toml ~/.config/ 2>/dev/null || true
@@ -94,6 +95,14 @@ echo "-- Installing wallpapers"
 sudo mkdir -p /usr/share/backgrounds
 sudo cp -f Wall.png /usr/share/backgrounds/ 2>/dev/null || true
 sudo cp -f wall-01.webp /usr/share/backgrounds/ 2>/dev/null || true
+
+# --------------------------------------------------
+# 10) Configure SDDM
+# --------------------------------------------------
+
+echo "-- Changing SDDM theme"
+sudo cp -r catppuccin-mocha-mauve/ /usr/share/themes/
+sudo cp -r sddm.conf /etc/  
 
 echo ""
 echo "===== INSTALLATION COMPLETE ====="

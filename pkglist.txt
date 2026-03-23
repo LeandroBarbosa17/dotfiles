@@ -33,9 +33,6 @@ jq
 kitty
 libpulse
 libva-intel-driver
-lightdm
-lightdm-gtk-greeter
-lightdm-gtk-greeter-settings
 linux-firmware
 linux-lts
 linux-lts-headers
@@ -65,8 +62,12 @@ pipewire-jack
 pipewire-pulse
 playerctl
 python-lsp-server
+qt5-quickcontrols2
+qt6-declarative
+qt6-svg
 rofi
 scrot
+sddm
 smartmontools
 spotify-launcher
 starship
