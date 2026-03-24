@@ -61,6 +61,18 @@ mkdir -p ~/.local
 mkdir -p ~/.icons
 
 # --------------------------------------------------
+# 6.1) Install Tela Circle Icon Theme (Purple)
+# --------------------------------------------------
+echo "-- Installing Tela Circle Icon Theme (Purple variant)"
+TEMP_ICONS="/tmp/tela-icons"
+git clone https://github.com/vinceliuice/Tela-circle-icon-theme.git "$TEMP_ICONS"
+cd "$TEMP_ICONS"
+# -c: circular, purple: cor roxa
+./install.sh -c purple
+cd ~/dotfiles/
+rm -rf "$TEMP_ICONS"
+
+# --------------------------------------------------
 # 7) Copy configuration files
 # --------------------------------------------------
 echo "-- Copying configuration files"
@@ -69,7 +81,6 @@ cp -r i3/ ~/.config/
 cp -r i3blocks/ ~/.config/
 cp -r kitty/ ~/.config/
 cp -r picom/ ~/.config/
-cp -r helix/ ~/.config/
 cp -r fastfetch/ ~/.config/
 cp -r rofi/ ~/.config/ 
 cp -r dunst/ ~/.config/ 2>/dev/null || true
