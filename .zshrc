@@ -1,6 +1,8 @@
 # Created by newuser for 5.9
 eval "$(starship init zsh)"
 
+export "MICRO_TRUECOLOR=1"
+
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

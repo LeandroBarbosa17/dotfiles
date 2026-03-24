@@ -83,6 +83,7 @@ cp -r kitty/ ~/.config/
 cp -r picom/ ~/.config/
 cp -r fastfetch/ ~/.config/
 cp -r rofi/ ~/.config/ 
+cp -r micro/ ~/.config/
 cp -r dunst/ ~/.config/ 2>/dev/null || true
 cp -r alacritty/ ~/.config/ 2>/dev/null || true
 cp starship.toml ~/.config/ 2>/dev/null || true
